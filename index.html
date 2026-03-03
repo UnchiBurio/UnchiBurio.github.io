@@ -1,135 +1,171 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Site</title>
-  <style>
-    :root{
-      --bg:#0b0b0b;
-      --ink:#7CFF6B;          /* 線の色 */
-      --stroke:2px;
-      --radius:20px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand-drawn Style Top Page</title>
+    <style>
+        /* 手書き風のフォントをGoogle Fontsから読み込み */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      min-height:100svh;
-      background:var(--bg);
-      color:var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
-    }
+        :root {
+            --bg-color: #151515; /* 背景の黒（少しだけグレー寄り） */
+            --line-color: #7bc043; /* 線の緑色 */
+        }
 
-    /* 上部ナビ */
-    .topnav{
-      position: relative;
-      width: min(900px, 92vw);
-      margin: 28px auto 0;
-      display:flex;
-      gap: 48px;
-      align-items:center;
-      justify-content:flex-start;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--line-color);
+            font-family: 'Caveat', cursive, sans-serif; /* 手書きフォントを適用 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    .topnav a{
-      position: relative;
-      display:inline-block;
-      padding: 10px 18px;
-      color: var(--ink);
-      text-decoration:none;
-      letter-spacing: .02em;
-      line-height: 1;
-    }
+        /* 全体のレイアウト */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 80px; /* メニューと顔の間の距離 */
+        }
 
-    /* 吹き出し本体（角丸枠） */
-    .topnav a::before{
-      content:"";
-      position:absolute;
-      inset: 0;
-      border: var(--stroke) solid var(--ink);
-      border-radius: var(--radius);
-      opacity: 0;
-      transform: scale(.98);
-      transition: opacity .15s ease, transform .15s ease;
-      pointer-events:none;
-      /* うっすら発光（任意） */
-      filter: drop-shadow(0 0 6px rgba(124,255,107,.25));
-    }
+        /* メニュー部分 */
+        .menu {
+            display: flex;
+            gap: 40px; /* リンク同士の隙間 */
+        }
 
-    /* しっぽ（枠線だけの三角っぽい形） */
-    .topnav a::after{
-      content:"";
-      position:absolute;
-      width: 16px;
-      height: 16px;
-      left: 28px;                 /* しっぽの位置：文字に合わせて調整 */
-      bottom: -9px;
-      transform: rotate(45deg);
-      border-left: var(--stroke) solid var(--ink);
-      border-bottom: var(--stroke) solid var(--ink);
-      opacity: 0;
-      transition: opacity .15s ease;
-      pointer-events:none;
-      background: transparent;
-      filter: drop-shadow(0 0 6px rgba(124,255,107,.25));
-    }
+        .menu-item {
+            position: relative;
+            text-decoration: none;
+            color: var(--line-color);
+            font-size: 2.5rem;
+            padding: 10px 25px;
+            border: 2px solid transparent; /* 通常時は枠線を透明に */
+            /* 手書き風の少し歪んだ角丸 */
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            transition: border-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* hover / keyboard focus で表示 */
-    .topnav a:hover::before,
-    .topnav a:focus-visible::before{
-      opacity: 1;
-      transform: scale(1);
-    }
-    .topnav a:hover::after,
-    .topnav a:focus-visible::after{
-      opacity: 1;
-    }
+        /* ホバー時（カーソルを重ねた時）に枠線を表示 */
+        .menu-item:hover {
+            border-color: var(--line-color);
+        }
 
-    /* デモ用の顔（スケッチの丸） */
-    .face{
-      width: 140px;
-      height: 140px;
-      border: var(--stroke) solid var(--ink);
-      border-radius: 50%;
-      margin: 80px auto 0;
-      position: relative;
-      filter: drop-shadow(0 0 10px rgba(124,255,107,.18));
-    }
-    .eye{
-      position:absolute;
-      top: 42px;
-      width: 12px;
-      height: 28px;
-      border-radius: 6px;
-      background: var(--ink);
-      opacity:.8;
-    }
-    .eye.left{ left: 46px; }
-    .eye.right{ right: 46px; }
-    .mouth{
-      position:absolute;
-      left: 50%;
-      top: 86px;
-      width: 44px;
-      height: 0;
-      border-top: var(--stroke) solid rgba(124,255,107,.8);
-      transform: translateX(-50%);
-      border-radius: 999px;
-    }
-  </style>
+        .menu-item .text {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 吹き出しの「しっぽ」の共通設定 */
+        .tail {
+            position: absolute;
+            opacity: 0; /* 通常時は非表示 */
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* ホバー時にしっぽを表示 */
+        .menu-item:hover .tail {
+            opacity: 1;
+        }
+
+        /* 各リンクごとのしっぽの位置と形（SVG） */
+        /* about (左) : 右下に向かって伸びる */
+        .tail-about {
+            bottom: -58px;
+            right: 15px;
+        }
+        /* daily text (中央) : 真下に向かって伸びる */
+        .tail-daily {
+            bottom: -48px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        /* gallary (右) : 左下に向かって伸びる */
+        .tail-gallery {
+            bottom: -58px;
+            left: 15px;
+        }
+
+        /* 中央の顔のイラスト（CSSで描画） */
+        .face {
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--line-color);
+            /* 少し歪んだ円 */
+            border-radius: 48% 52% 51% 49% / 51% 48% 52% 49%;
+            position: relative;
+        }
+
+        .eye {
+            width: 2px;
+            height: 18px;
+            background-color: var(--line-color);
+            position: absolute;
+            top: 30px;
+            border-radius: 2px;
+        }
+        .eye.left { left: 30px; transform: rotate(3deg); }
+        .eye.right { right: 30px; transform: rotate(-2deg); }
+
+        .mouth {
+            width: 30px;
+            height: 2px;
+            background-color: var(--line-color);
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            border-radius: 2px;
+        }
+    </style>
 </head>
 <body>
-  <nav class="topnav" aria-label="Primary">
-    <a href="/about/">about</a>
-    <a href="/daily/">daily text</a>
-    <a href="/gallery/">gallery</a>
-  </nav>
 
-  <div class="face" aria-hidden="true">
-    <span class="eye left"></span>
-    <span class="eye right"></span>
-    <span class="mouth"></span>
-  </div>
+    <div class="container">
+        <!-- ナビゲーションメニュー -->
+        <nav class="menu">
+            <a href="#about" class="menu-item">
+                <span class="text">about</span>
+                <!-- 吹き出しのしっぽ (SVG) -->
+                <svg class="tail tail-about" width="50" height="60" viewBox="0 0 50 60">
+                    <!-- fillで背景色と同じ色を塗り、枠線を隠して吹き出しの口を作っています -->
+                    <path d="M 10 0 Q 25 30 50 60 Q 35 30 40 0" fill="#151515" stroke="#7bc043" stroke-width="2" />
+                </svg>
+            </a>
+            
+            <a href="#daily" class="menu-item">
+                <span class="text">daily text</span>
+                <svg class="tail tail-daily" width="40" height="50" viewBox="0 0 40 50">
+                    <path d="M 10 0 Q 20 25 20 50 Q 20 25 30 0" fill="#151515" stroke="#7bc043" stroke-width="2" />
+                </svg>
+            </a>
+            
+            <a href="#gallery" class="menu-item">
+                <span class="text">gallary</span>
+                <svg class="tail tail-gallery" width="50" height="60" viewBox="0 0 50 60">
+                    <path d="M 40 0 Q 25 30 0 60 Q 15 30 10 0" fill="#151515" stroke="#7bc043" stroke-width="2" />
+                </svg>
+            </a>
+        </nav>
+
+        <!-- 顔のイラスト -->
+        <div class="face">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            <div class="mouth"></div>
+        </div>
+    </div>
+
 </body>
 </html>
