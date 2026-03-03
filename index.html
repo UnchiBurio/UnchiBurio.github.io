@@ -100,40 +100,20 @@
         }
 
         .face {
-            width: 110px;
-            height: 110px;
+            width: clamp(110px, 18vw, 170px);
+            aspect-ratio: 1 / 1;
             border: 2px solid var(--line-color);
-            border-radius: 47% 53% 49% 51% / 52% 47% 53% 48%;
-            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
             transform: rotate(-2deg);
+            box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-color) 30%, transparent);
         }
 
-        .eye {
-            width: 2px;
-            height: 18px;
-            background: var(--line-color);
-            border-radius: 99px;
-            position: absolute;
-            top: 33px;
-        }
-
-        .eye.left {
-            left: 34px;
-        }
-
-        .eye.right {
-            right: 34px;
-        }
-
-        .mouth {
-            position: absolute;
-            left: 50%;
-            bottom: 30px;
-            width: 34px;
-            height: 2px;
-            background: var(--line-color);
-            border-radius: 99px;
-            transform: translateX(-50%);
+        .face img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -145,10 +125,8 @@
             <a href="gallery.html" class="menu-item gallery">gallery</a>
         </nav>
 
-        <div class="face" aria-hidden="true">
-            <span class="eye left"></span>
-            <span class="eye right"></span>
-            <span class="mouth"></span>
+        <div class="face">
+            <img src="face.png" alt="中央の顔イラスト" loading="lazy">
         </div>
     </main>
 </body>
