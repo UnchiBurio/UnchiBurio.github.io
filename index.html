@@ -32,19 +32,20 @@
             min-height: 70vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: flex-start;
-            padding-top: 40px;
-            gap: 90px;
+            padding-top: 22px;
+            gap: 34px;
         }
 
         .menu {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
+            justify-content: flex-start;
+            gap: 16px;
             font-size: clamp(2.2rem, 5vw, 3.4rem);
             line-height: 1;
+            margin-left: clamp(14px, 8vw, 150px);
         }
 
         .menu-item {
@@ -55,6 +56,10 @@
             border: 2px solid transparent;
             border-radius: 58% 42% 55% 45% / 40% 58% 42% 60%;
             transition: border-color 0.24s ease;
+        }
+
+        .menu-item.gallery {
+            border-color: var(--line-color);
         }
 
         .menu-item:hover,
@@ -99,6 +104,20 @@
             transform: rotate(-16deg) scaleX(-1);
         }
 
+        .menu-item.gallery::before {
+            content: "";
+            position: absolute;
+            width: clamp(46px, 7vw, 72px);
+            height: clamp(72px, 10vw, 120px);
+            left: 36%;
+            bottom: calc(100% - 2px);
+            border-top: 2px solid var(--line-color);
+            border-right: 2px solid var(--line-color);
+            border-radius: 0 90% 0 0;
+            transform: rotate(-18deg);
+            pointer-events: none;
+        }
+
         .face {
             width: clamp(110px, 18vw, 170px);
             aspect-ratio: 1 / 1;
@@ -107,6 +126,7 @@
             overflow: hidden;
             transform: rotate(-2deg);
             box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-color) 30%, transparent);
+            margin-left: clamp(170px, 35vw, 455px);
         }
 
         .face img {
@@ -119,15 +139,15 @@
 </head>
 <body>
     <main class="container">
+        <div class="face">
+            <img src="face.png" alt="中央の顔イラスト" loading="lazy">
+        </div>
+
         <nav class="menu" aria-label="Main menu">
             <a href="about.html" class="menu-item about">about</a>
             <a href="daily-text.html" class="menu-item daily">daily text</a>
             <a href="gallery.html" class="menu-item gallery">gallery</a>
         </nav>
-
-        <div class="face">
-            <img src="face.png" alt="中央の顔イラスト" loading="lazy">
-        </div>
     </main>
 </body>
 </html>
