@@ -1,153 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Page</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Page</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
-
-        :root {
-            --bg-color: #05070c;
-            --line-color: #68d15d;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            background: var(--bg-color);
-            color: var(--line-color);
-            font-family: 'Caveat', cursive, sans-serif;
-            overflow: hidden;
-        }
-
-        .container {
-            width: min(920px, 92vw);
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-            padding-top: 22px;
-            gap: 34px;
-        }
-
-        .menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            gap: 16px;
-            font-size: clamp(2.2rem, 5vw, 3.4rem);
-            line-height: 1;
-            margin-left: clamp(14px, 8vw, 150px);
-        }
-
-        .menu-item {
-            position: relative;
-            text-decoration: none;
-            color: inherit;
-            padding: 8px 22px 10px;
-            border: 2px solid transparent;
-            border-radius: 58% 42% 55% 45% / 40% 58% 42% 60%;
-            transition: border-color 0.24s ease;
-        }
-
-        .menu-item.gallery {
-            border-color: var(--line-color);
-        }
-
-        .menu-item:hover,
-        .menu-item:focus-visible {
-            border-color: var(--line-color);
-            outline: none;
-        }
-
-        .menu-item::after {
-            content: "";
-            position: absolute;
-            width: 58px;
-            height: 74px;
-            opacity: 0;
-            pointer-events: none;
-            border-left: 2px solid var(--line-color);
-            border-bottom: 2px solid var(--line-color);
-            border-radius: 0 0 95% 80%;
-            transition: opacity 0.24s ease;
-        }
-
-        .menu-item:hover::after,
-        .menu-item:focus-visible::after {
-            opacity: 1;
-        }
-
-        .menu-item.about::after {
-            left: 58%;
-            top: calc(100% - 2px);
-            transform: rotate(8deg);
-        }
-
-        .menu-item.daily::after {
-            left: 44%;
-            top: calc(100% - 2px);
-            transform: rotate(-8deg) scaleX(-1);
-        }
-
-        .menu-item.gallery::after {
-            left: 30%;
-            top: calc(100% - 2px);
-            transform: rotate(-16deg) scaleX(-1);
-        }
-
-        .menu-item.gallery::before {
-            content: "";
-            position: absolute;
-            width: clamp(46px, 7vw, 72px);
-            height: clamp(72px, 10vw, 120px);
-            left: 36%;
-            bottom: calc(100% - 2px);
-            border-top: 2px solid var(--line-color);
-            border-right: 2px solid var(--line-color);
-            border-radius: 0 90% 0 0;
-            transform: rotate(-18deg);
-            pointer-events: none;
-        }
-
-        .face {
-            width: clamp(110px, 18vw, 170px);
-            aspect-ratio: 1 / 1;
-            border: 2px solid var(--line-color);
-            border-radius: 50%;
-            overflow: hidden;
-            transform: rotate(-2deg);
-            box-shadow: 0 0 0 1px color-mix(in srgb, var(--line-color) 30%, transparent);
-            margin-left: clamp(170px, 35vw, 455px);
-        }
-
-        .face img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-        }
+      body { margin: 0; background: #f2f3f7; }
+      .canvas {
+        position: relative;
+        width: 1706px;
+        height: 829px;
+        margin: 16px auto;
+        background: #fff;
+        border: 1px solid #d0d4df;
+        overflow: hidden;
+      }
+      .text-element {
+        position: absolute;
+        white-space: pre-wrap;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
     </style>
-</head>
-<body>
-    <main class="container">
-        <div class="face">
-            <img src="face.png" alt="中央の顔イラスト" loading="lazy">
-        </div>
-
-        <nav class="menu" aria-label="Main menu">
-            <a href="about.html" class="menu-item about">about</a>
-            <a href="daily-text.html" class="menu-item daily">daily text</a>
-            <a href="gallery.html" class="menu-item gallery">gallery</a>
-        </nav>
-    </main>
-</body>
+  </head>
+  <body>
+    <div class="canvas">
+<div class="text-element" style="left:573px;top:238px;font-size:24px;color:rgb(17, 17, 17);">あ</div>
+<div class="text-element" style="left:902px;top:105px;font-size:24px;color:rgb(17, 17, 17);">そ</div>
+<div class="text-element" style="left:797px;top:354px;font-size:24px;color:rgb(17, 17, 17);">ボ</div>
+    </div>
+  </body>
 </html>
