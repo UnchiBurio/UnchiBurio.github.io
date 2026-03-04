@@ -58,10 +58,6 @@
             transition: border-color 0.24s ease;
         }
 
-        .menu-item.gallery {
-            border-color: var(--line-color);
-        }
-
         .menu-item:hover,
         .menu-item:focus-visible {
             border-color: var(--line-color);
@@ -88,34 +84,20 @@
 
         .menu-item.about::after {
             left: 58%;
-            top: calc(100% - 2px);
-            transform: rotate(8deg);
+            bottom: calc(100% - 8px);
+            transform: rotate(142deg);
         }
 
         .menu-item.daily::after {
-            left: 44%;
-            top: calc(100% - 2px);
-            transform: rotate(-8deg) scaleX(-1);
+            left: 68%;
+            bottom: calc(100% - 10px);
+            transform: rotate(126deg);
         }
 
         .menu-item.gallery::after {
-            left: 30%;
-            top: calc(100% - 2px);
-            transform: rotate(-16deg) scaleX(-1);
-        }
-
-        .menu-item.gallery::before {
-            content: "";
-            position: absolute;
-            width: clamp(46px, 7vw, 72px);
-            height: clamp(72px, 10vw, 120px);
-            left: 36%;
-            bottom: calc(100% - 2px);
-            border-top: 2px solid var(--line-color);
-            border-right: 2px solid var(--line-color);
-            border-radius: 0 90% 0 0;
-            transform: rotate(-18deg);
-            pointer-events: none;
+            left: 72%;
+            bottom: calc(100% - 8px);
+            transform: rotate(112deg);
         }
 
         .face {
