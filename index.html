@@ -1,32 +1,25 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Saved Page</title>
-    <style>
-      body { margin: 0; background: #f2f3f7; }
-      .canvas {
-        position: relative;
-        width: 1706px;
-        height: 829px;
-        margin: 16px auto;
-        background: #fff;
-        border: 1px solid #d0d4df;
-        overflow: hidden;
-      }
-      .text-element {
-        position: absolute;
-        white-space: pre-wrap;
-        font-family: "Helvetica Neue", Arial, sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="canvas">
-<div class="text-element" style="left:573px;top:238px;font-size:24px;color:rgb(17, 17, 17);">あ</div>
-<div class="text-element" style="left:902px;top:105px;font-size:24px;color:rgb(17, 17, 17);">そ</div>
-<div class="text-element" style="left:797px;top:354px;font-size:24px;color:rgb(17, 17, 17);">ボ</div>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>project/index.html</title>
+  <style>
+    body { margin: 0; background: #111; color: #f0f0f0; font-family: "Segoe UI", sans-serif; }
+    .preview-stage { position: relative; min-height: 100vh; background: linear-gradient(160deg, #1e1e1e 0%, #151515 100%); overflow: hidden; }
+    .preview-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .preview-text { position: absolute; white-space: pre; font-size: 20px; line-height: 1.2; }
+    .preview-link { color: inherit; text-decoration: underline; text-decoration-color: rgba(79, 195, 247, 0.75); }
+    .preview-image { position: absolute; object-fit: cover; border-radius: 4px; }
+    .preview-frame { position: absolute; border: 1px solid #5f5f5f; background: #121212; }
+  </style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="project/index.html">
+    <svg><path d="M -116.5 -170 L -121.5 -166 L -135.5 -157 L -151.5 -144 L -168.5 -124 L -182.5 -100 L -190.5 -75 L -190.5 -36 L -173.5 -21 L -154.5 -11 L -132.5 -7 L -109.5 -1 L -87.5 5 L -64.5 20 L -52.5 34 L -49.5 46 L -49.5 55 L -49.5 64 L -49.5 75 L -43.5 92 L -38.5 101 L -34.5 104 L -25.5 111 L -12.5 117 L 4.5 127 L 41.5 143 L 73.5 152 L 110.5 158 L 145.5 162 L 164.5 164 L 187.5 169 L 190.5 170 L 172.5 161" stroke="#4fc3f7" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(616.5 205) rotate(-50) scale(0.85)" /><path d="M 71 -112.5 L 66 -103.5 L 40 -83.5 L 18 -67.5 L -6 -52.5 L -28 -34.5 L -45 -11.5 L -54 13.5 L -55 39.5 L -52 63.5 L -44 91.5 L -43 104.5 L -43 111.5 L -47 112.5 L -61 105.5 L -71 99.5" stroke="#4fc3f7" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(892 364.5) rotate(0) scale(1)" /></svg>
+    
+    <iframe class="preview-frame" src="index.html" style="left:268px;top:349px;width:314px;height:412px;transform:translate(-50%, -50%) rotate(0deg) scale(1.25);"></iframe>
+    <div class="preview-text" style="left:741px;top:201px;color:#f0f0f0;transform:translate(-50%, -50%) rotate(-50deg) scale(1);"><a href="a.html" class="preview-link">about</a></div><div class="preview-text" style="left:576px;top:237px;color:#f0f0f0;transform:translate(-50%, -50%) rotate(5deg) scale(1);">top</div>
+  </main>
+</body>
 </html>
