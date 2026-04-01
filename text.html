@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>project/text.html</title>
+  <style>
+    body { margin: 0; background: #111; color: #f0f0f0; font-family: "Segoe UI", "Yu Gothic UI", sans-serif; }
+    .preview-stage { position: relative; min-height: 100vh; background: linear-gradient(160deg, #1e1e1e 0%, #151515 100%); overflow: visible; }
+    .preview-node { position: absolute; left: 0; top: 0; --interaction-translate-x: 0px; --interaction-translate-y: 0px; --interaction-rotate: 0deg; --interaction-scale: 1; --interaction-opacity: 1; --interaction-color: var(--base-color); --interaction-duration: 250ms; --interaction-delay: 0ms; --interaction-easing: ease; }
+    .preview-transform-layer { transform: translate(calc(-50% + var(--interaction-translate-x)), calc(-50% + var(--interaction-translate-y))) rotate(calc(var(--base-rotate, 0deg) + var(--interaction-rotate))) scale(calc(var(--base-scale, 1) * var(--interaction-scale))); transform-origin: center center; opacity: var(--interaction-opacity); transition: transform var(--interaction-duration) var(--interaction-easing) var(--interaction-delay), opacity var(--interaction-duration) var(--interaction-easing) var(--interaction-delay); }
+    .preview-visual { color: var(--interaction-color, var(--base-color, inherit)); transition: color var(--interaction-duration) var(--interaction-easing) var(--interaction-delay); }
+    .preview-text { min-width: 24px; min-height: 24px; white-space: pre-wrap; font-size: 20px; line-height: 1.2; text-align: left; overflow: hidden; overflow-wrap: anywhere; box-sizing: border-box; }
+    .preview-link-shell { display: block; color: inherit; text-decoration: none; cursor: pointer; width: 100%; height: 100%; }
+    .preview-link-shell-text { display: inline-block; width: auto; height: auto; vertical-align: top; }
+    .preview-link-shell-text .preview-text { text-decoration: underline; text-decoration-color: rgba(79, 195, 247, 0.75); }
+    .preview-image-shell, .preview-frame-shell { overflow: hidden; border-radius: 4px; }
+    .preview-audio-shell { display: flex; align-items: center; }
+    .preview-image { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
+    .preview-audio { width: 100%; height: 100%; display: block; }
+    .preview-frame { width: 100%; height: 100%; border: 1px solid currentColor; background: #121212; }
+    .preview-table { border: 1px solid currentColor; background: rgba(14, 14, 14, 0.55); }
+    .preview-table-cell { border: 1px solid currentColor; }
+    .preview-stroke { overflow: visible; display: block; }
+    .preview-stroke-link path { cursor: pointer; }
+    .preview-hit-area-shell { position: absolute; width: 0; height: 0; overflow: visible; }
+    .preview-hit-area-link { position: absolute; display: block; background: rgba(0, 0, 0, 0); border: 0; padding: 0; margin: 0; appearance: none; cursor: pointer; }
+    
+  </style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="project/text.html" style="height:max(100vh, 748px);">
+    <div class="preview-node preview-node-text" data-item-id="9cc8700f-008d-4b99-bb5e-99615e435b10" style="left:149px;top:178px;--base-rotate:0deg;--base-scale:1;--base-color:#f0f0f0;"><div class="preview-transform-layer"><div class="preview-visual preview-text" style="width:117px;height:24px;font-size:20px;line-height:1.2;">きょうのこんだて</div></div></div><div class="preview-node preview-node-text" data-item-id="8bdc8d07-db52-4a32-9beb-a9ca7fce8373" style="left:250.75px;top:73px;--base-rotate:0deg;--base-scale:1;--base-color:#f0f0f0;"><div class="preview-transform-layer"><div class="preview-visual preview-text" style="width:248px;height:100.872px;font-size:84.06px;line-height:1.2;">テキスト</div></div></div><div class="preview-node preview-node-stroke" data-item-id="04f735fa-d101-46a3-afe7-48db396dca68" style="left:433.5px;top:330.5px;--base-rotate:0deg;--base-scale:1;--base-color:#4fc3f7;"><div class="preview-transform-layer"><svg class="preview-visual preview-stroke" viewBox="0 0 605 595" style="width:605px;height:595px;"><path d="M 109 2 L 109 5 L 109 9 L 109 12 L 108 15 L 106 20 L 105 24 L 103 28 L 102 32 L 100 39 L 99 41 L 98 45 L 96 48 L 93 53 L 90 58 L 85 63 L 80 68 L 72 76 L 66 82 L 60 88 L 53 94 L 42 101 L 37 106 L 33 110 L 30 113 L 25 119 L 24 123 L 21 128 L 19 132 L 16 138 L 13 143 L 10 151 L 8 160 L 5 176 L 4 185 L 3 191 L 2 199 L 2 203 L 2 210 L 3 221 L 3 224 L 4 230 L 5 236 L 7 241 L 10 247 L 12 252 L 18 259 L 22 263 L 26 268 L 32 274 L 35 276 L 43 282 L 47 284 L 54 288 L 57 288 L 64 292 L 74 295 L 87 299 L 93 300 L 101 301 L 106 302 L 111 302 L 121 302 L 136 302 L 141 302 L 147 301 L 157 297 L 163 295 L 173 291 L 178 289 L 188 284 L 194 283 L 199 281 L 208 277 L 213 276 L 222 271 L 231 267 L 243 260 L 252 257 L 269 251 L 281 249 L 291 248 L 301 246 L 313 244 L 328 243 L 342 243 L 355 242 L 377 242 L 397 245 L 421 249 L 443 251 L 461 254 L 465 255 L 474 256 L 480 259 L 486 261 L 493 265 L 498 270 L 503 275 L 516 287 L 524 298 L 532 306 L 537 315 L 546 326 L 554 335 L 559 342 L 565 351 L 569 356 L 572 362 L 574 368 L 577 376 L 582 386 L 584 389 L 590 398 L 593 404 L 596 408 L 599 412 L 602 415 L 603 417 L 603 418 L 603 421 L 603 423 L 603 427 L 603 431 L 602 436 L 595 448 L 590 454 L 585 459 L 581 465 L 577 469 L 574 473 L 567 477 L 562 480 L 558 483 L 550 486 L 541 491 L 536 494 L 531 495 L 525 497 L 524 497 L 516 500 L 509 504 L 504 508 L 494 512 L 487 513 L 483 513 L 480 513 L 477 513 L 471 513 L 466 512 L 459 512 L 451 512 L 442 512 L 423 512 L 412 512 L 397 511 L 389 511 L 380 511 L 373 511 L 362 514 L 358 516 L 355 518 L 348 521 L 342 524 L 334 527 L 320 531 L 312 534 L 299 537 L 285 541 L 279 544 L 271 548 L 268 550 L 265 554 L 264 555 L 263 559 L 262 561 L 261 561 L 261 562 L 261 563 L 261 564 L 262 564 L 262 565 L 263 566 L 263 568 L 263 569 L 263 571 L 264 574 L 264 575 L 264 577 L 265 578 L 265 580 L 265 581 L 265 583 L 265 584 L 266 585 L 266 586 L 267 587 L 268 588 L 268 589 L 269 589 L 269 590 L 270 591 L 270 592 L 270 593" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg></div></div><div class="preview-node preview-node-text" data-item-id="bb28d71a-65ec-4d90-b0e9-8d41c78e6976" style="left:706.922px;top:396.5px;--base-rotate:0deg;--base-scale:1;--base-color:#f0f0f0;"><div class="preview-transform-layer"><div class="preview-visual preview-text" style="width:1267px;height:102.984px;font-size:12.26px;line-height:1.2;">今日もまた皮膚科に行かなかった。唇はぼろぼろ、足の指の爪は黄色く異常な厚みを増している。明らかに行った方がいいのだが、また明日、明後日とずるずるずるずる引き延ばしている。去年の11月あたりから行こう行こうとは思っているのだが、すでに3月このありさまだ。
+
+なまじ働いていないから、時間がいくらでもあると思っているから、こうして今日も行かずじまい。
+
+もちろん家では何もしていないし外にも出ない。日に日に未来が狭まっているのを感じつつ、そんな未来を直視もしたくもないので当然動かない。何かしなくちゃ。なにを？
+
+多分手遅れになるのを待っている。そうすれば、何もしない理由ができるから。少しでもマシな未来のためにえいや！、と立ち上がらなくちゃいけないんだろうけど、そんなマシな未来を見るのも怖い。</div></div></div><div class="preview-node preview-node-audio" data-item-id="10b9bfc9-731b-4dac-8182-3a324fdd32d6" style="left:341px;top:231px;--base-rotate:0deg;--base-scale:1;--base-color:inherit;"><div class="preview-transform-layer preview-audio-shell" style="width:320px;height:54px;"><audio class="preview-visual preview-audio" controls preload="metadata" src="assets/audio/2.mp3"></audio></div></div>
+    
+  </main>
+  <script>
+    (() => {
+      const stage = document.querySelector('.preview-stage');
+      if (!stage) return;
+      const motionPathRules = [];
+      const motionPathRuleMap = new Map(motionPathRules.map((rule) => [rule.id, rule]));
+      const motionPathRulesByTarget = new Map();
+      const motionPathStates = new Map();
+      let motionPathFrameId = 0;
+      motionPathRules.forEach((rule) => {
+        rule.targetIds.forEach((targetId) => {
+          if (!motionPathRulesByTarget.has(targetId)) motionPathRulesByTarget.set(targetId, []);
+          motionPathRulesByTarget.get(targetId).push(rule);
+        });
+      });
+      const readRuleIds = (attributeName) => Array.from(stage.querySelectorAll('[' + attributeName + ']'))
+        .flatMap((element) => String(element.getAttribute(attributeName) || '').split(/s+/).filter(Boolean));
+      const clamp01 = (value) => Math.max(0, Math.min(1, value));
+      const applyEasing = (name, value) => {
+        const t = clamp01(value);
+        if (name === 'linear') return t;
+        if (name === 'ease-in') return t * t * t;
+        if (name === 'ease-out') return 1 - ((1 - t) * (1 - t) * (1 - t));
+        if (name === 'ease-in-out') {
+          return t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      };
+      const buildSampledMotionPath = (path) => {
+        const points = Array.isArray(path)
+          ? path.map((point) => ({ x: Number(point?.x) || 0, y: Number(point?.y) || 0 }))
+          : [];
+        if (points.length < 2) return null;
+        const segments = [];
+        let totalLength = 0;
+        for (let index = 1; index < points.length; index += 1) {
+          const from = points[index - 1];
+          const to = points[index];
+          const length = Math.hypot(to.x - from.x, to.y - from.y);
+          if (length <= 0.001) continue;
+          segments.push({ from, to, length, start: totalLength, end: totalLength + length });
+          totalLength += length;
+        }
+        if (!segments.length || totalLength <= 0.001) return null;
+        return { points, segments, totalLength };
+      };
+      const sampleMotionPath = (sampledPath, progress) => {
+        if (!sampledPath) return { x: 0, y: 0 };
+        const distance = sampledPath.totalLength * clamp01(progress);
+        const segment = sampledPath.segments.find((entry) => distance <= entry.end) || sampledPath.segments[sampledPath.segments.length - 1];
+        if (!segment) return { x: 0, y: 0 };
+        const segmentProgress = segment.length <= 0.001 ? 1 : (distance - segment.start) / segment.length;
+        return {
+          x: segment.from.x + (segment.to.x - segment.from.x) * segmentProgress,
+          y: segment.from.y + (segment.to.y - segment.from.y) * segmentProgress,
+        };
+      };
+      const applyMotionPathOverride = (node, point) => {
+        node.style.setProperty('--interaction-translate-x', '0px');
+        node.style.setProperty('--interaction-translate-y', '0px');
+        node.style.setProperty('transform', 'translate(' + String(point.x) + 'px, ' + String(point.y) + 'px)');
+      };
+      const clearMotionPathOverride = (node) => {
+        node.style.removeProperty('transform');
+        node.style.removeProperty('--interaction-translate-x');
+        node.style.removeProperty('--interaction-translate-y');
+      };
+      const ensureMotionPathAnimationLoop = () => {
+        if (motionPathFrameId) return;
+        const tick = (timestamp) => {
+          let hasRunningAnimation = false;
+          motionPathStates.forEach((state, targetId) => {
+            const node = stage.querySelector('.preview-node[data-item-id="' + targetId + '"]');
+            if (!node) {
+              motionPathStates.delete(targetId);
+              return;
+            }
+            const rule = motionPathRuleMap.get(state.ruleId || '');
+            if (!rule || !state.sampledPath) {
+              clearMotionPathOverride(node);
+              motionPathStates.delete(targetId);
+              return;
+            }
+            const delayMs = Math.max(0, Number(rule.delayMs) || 0);
+            const durationMs = Math.max(1, Number(rule.durationMs) || 1);
+            const elapsedMs = Math.max(0, timestamp - state.startedAt - delayMs);
+            const rawProgress = clamp01(elapsedMs / durationMs);
+            const easedProgress = applyEasing(rule.easing, rawProgress);
+            const currentProgress = state.fromProgress + (state.toProgress - state.fromProgress) * easedProgress;
+            const point = sampleMotionPath(state.sampledPath, currentProgress);
+            applyMotionPathOverride(node, point);
+            state.currentProgress = currentProgress;
+            if (rawProgress < 1) {
+              hasRunningAnimation = true;
+              return;
+            }
+            if (state.toProgress <= 0.001) {
+              clearMotionPathOverride(node);
+              motionPathStates.delete(targetId);
+            }
+          });
+          motionPathFrameId = hasRunningAnimation ? window.requestAnimationFrame(tick) : 0;
+        };
+        motionPathFrameId = window.requestAnimationFrame(tick);
+      };
+      const isMotionRuleActive = (rule, activeHoverRules, activeClickRules) => {
+        if (rule.trigger === 'hover') return activeHoverRules.has(rule.id);
+        if (rule.trigger === 'click') return activeClickRules.has(rule.id);
+        return stage.classList.contains('is-enter-ready');
+      };
+      const syncMotionPathStyles = () => {
+        const activeHoverRules = new Set(String(stage.getAttribute('data-active-hover-rules') || '').split(/s+/).filter(Boolean));
+        const activeClickRules = new Set(String(stage.getAttribute('data-active-click-rules') || '').split(/s+/).filter(Boolean));
+        motionPathRulesByTarget.forEach((rules, targetId) => {
+          const node = stage.querySelector('.preview-node[data-item-id="' + targetId + '"]');
+          if (!node) return;
+          const activeCandidates = rules.filter((rule) => isMotionRuleActive(rule, activeHoverRules, activeClickRules));
+          const activeRule = activeCandidates[activeCandidates.length - 1] || null;
+          const currentState = motionPathStates.get(targetId);
+          if (activeRule) {
+            const sampledPath = buildSampledMotionPath(activeRule.path);
+            if (!sampledPath) return;
+            if (currentState && currentState.ruleId === activeRule.id && currentState.toProgress === 1) return;
+            motionPathStates.set(targetId, {
+              ruleId: activeRule.id,
+              sampledPath,
+              fromProgress: currentState?.currentProgress || 0,
+              toProgress: 1,
+              currentProgress: currentState?.currentProgress || 0,
+              startedAt: performance.now(),
+            });
+            ensureMotionPathAnimationLoop();
+            return;
+          }
+          if (!currentState) {
+            clearMotionPathOverride(node);
+            return;
+          }
+          if (currentState.toProgress === 0) return;
+          motionPathStates.set(targetId, {
+            ...currentState,
+            fromProgress: currentState.currentProgress || 0,
+            toProgress: 0,
+            startedAt: performance.now(),
+          });
+          ensureMotionPathAnimationLoop();
+        });
+      };
+      const updateHoverRuleState = () => {
+        const active = new Set(String(stage.getAttribute('data-active-hover-rules') || '').split(/s+/).filter(Boolean));
+        const enterHovered = new Set(Array.from(stage.querySelectorAll('[data-hover-enter-rules]'))
+          .filter((element) => element.matches(':hover'))
+          .flatMap((element) => String(element.getAttribute('data-hover-enter-rules') || '').split(/s+/).filter(Boolean)));
+        const leaveHovered = new Set(Array.from(stage.querySelectorAll('[data-hover-leave-rules]'))
+          .filter((element) => element.matches(':hover'))
+          .flatMap((element) => String(element.getAttribute('data-hover-leave-rules') || '').split(/s+/).filter(Boolean)));
+        const knownRuleIds = new Set([...active, ...readRuleIds('data-hover-enter-rules'), ...readRuleIds('data-hover-leave-rules')]);
+        knownRuleIds.forEach((ruleId) => {
+          if (enterHovered.has(ruleId)) {
+            active.add(ruleId);
+            return;
+          }
+          if (!leaveHovered.has(ruleId)) {
+            active.delete(ruleId);
+          }
+        });
+        stage.setAttribute('data-active-hover-rules', Array.from(active).join(' '));
+        syncMotionPathStyles();
+      };
+      requestAnimationFrame(() => {
+        stage.classList.add('is-enter-ready');
+        updateHoverRuleState();
+        syncMotionPathStyles();
+      });
+      ['pointermove', 'pointerover', 'pointerout'].forEach((eventName) => {
+        stage.addEventListener(eventName, updateHoverRuleState);
+      });
+      stage.addEventListener('pointerleave', () => {
+        stage.setAttribute('data-active-hover-rules', '');
+        syncMotionPathStyles();
+      });
+      stage.addEventListener('click', (event) => {
+        const source = event.target instanceof Element ? event.target.closest('[data-click-rules]') : null;
+        if (!source) return;
+        const rules = String(source.getAttribute('data-click-rules') || '').split(/\s+/).filter(Boolean);
+        if (!rules.length) return;
+        const active = new Set(String(stage.getAttribute('data-active-click-rules') || '').split(/\s+/).filter(Boolean));
+        rules.forEach((ruleId) => {
+          if (active.has(ruleId)) active.delete(ruleId);
+          else active.add(ruleId);
+        });
+        stage.setAttribute('data-active-click-rules', Array.from(active).join(' '));
+        syncMotionPathStyles();
+      });
+    })();
+  </script>
+</body>
+</html>

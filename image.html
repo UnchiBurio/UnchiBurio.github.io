@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>project/image.html</title>
+  <style>
+    body { margin: 0; background: #111; color: #f0f0f0; font-family: "Segoe UI", "Yu Gothic UI", sans-serif; }
+    .preview-stage { position: relative; min-height: 100vh; background: linear-gradient(160deg, #1e1e1e 0%, #151515 100%); overflow: visible; }
+    .preview-node { position: absolute; left: 0; top: 0; --interaction-translate-x: 0px; --interaction-translate-y: 0px; --interaction-rotate: 0deg; --interaction-scale: 1; --interaction-opacity: 1; --interaction-color: var(--base-color); --interaction-duration: 250ms; --interaction-delay: 0ms; --interaction-easing: ease; }
+    .preview-transform-layer { transform: translate(calc(-50% + var(--interaction-translate-x)), calc(-50% + var(--interaction-translate-y))) rotate(calc(var(--base-rotate, 0deg) + var(--interaction-rotate))) scale(calc(var(--base-scale, 1) * var(--interaction-scale))); transform-origin: center center; opacity: var(--interaction-opacity); transition: transform var(--interaction-duration) var(--interaction-easing) var(--interaction-delay), opacity var(--interaction-duration) var(--interaction-easing) var(--interaction-delay); }
+    .preview-visual { color: var(--interaction-color, var(--base-color, inherit)); transition: color var(--interaction-duration) var(--interaction-easing) var(--interaction-delay); }
+    .preview-text { min-width: 24px; min-height: 24px; white-space: pre-wrap; font-size: 20px; line-height: 1.2; text-align: left; overflow: hidden; overflow-wrap: anywhere; box-sizing: border-box; }
+    .preview-link-shell { display: block; color: inherit; text-decoration: none; cursor: pointer; width: 100%; height: 100%; }
+    .preview-link-shell-text { display: inline-block; width: auto; height: auto; vertical-align: top; }
+    .preview-link-shell-text .preview-text { text-decoration: underline; text-decoration-color: rgba(79, 195, 247, 0.75); }
+    .preview-image-shell, .preview-frame-shell { overflow: hidden; border-radius: 4px; }
+    .preview-audio-shell { display: flex; align-items: center; }
+    .preview-image { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
+    .preview-audio { width: 100%; height: 100%; display: block; }
+    .preview-frame { width: 100%; height: 100%; border: 1px solid currentColor; background: #121212; }
+    .preview-table { border: 1px solid currentColor; background: rgba(14, 14, 14, 0.55); }
+    .preview-table-cell { border: 1px solid currentColor; }
+    .preview-stroke { overflow: visible; display: block; }
+    .preview-stroke-link path { cursor: pointer; }
+    .preview-hit-area-shell { position: absolute; width: 0; height: 0; overflow: visible; }
+    .preview-hit-area-link { position: absolute; display: block; background: rgba(0, 0, 0, 0); border: 0; padding: 0; margin: 0; appearance: none; cursor: pointer; }
+    
+  </style>
+</head>
+<body>
+  <main class="preview-stage" aria-label="project/image.html" style="height:max(100vh, 684px);">
+    <div class="preview-node preview-node-image" data-item-id="3ca64abe-54ef-49d8-ba3f-d827faa81451" style="left:443px;top:314px;--base-rotate:0deg;--base-scale:1;--base-color:inherit;"><div class="preview-transform-layer preview-image-shell" style="width:700px;height:500px;"><img class="preview-visual preview-image" src="assets/images/eeeee.png" alt="" /></div></div>
+    
+  </main>
+  <script>
+    (() => {
+      const stage = document.querySelector('.preview-stage');
+      if (!stage) return;
+      const motionPathRules = [];
+      const motionPathRuleMap = new Map(motionPathRules.map((rule) => [rule.id, rule]));
+      const motionPathRulesByTarget = new Map();
+      const motionPathStates = new Map();
+      let motionPathFrameId = 0;
+      motionPathRules.forEach((rule) => {
+        rule.targetIds.forEach((targetId) => {
+          if (!motionPathRulesByTarget.has(targetId)) motionPathRulesByTarget.set(targetId, []);
+          motionPathRulesByTarget.get(targetId).push(rule);
+        });
+      });
+      const readRuleIds = (attributeName) => Array.from(stage.querySelectorAll('[' + attributeName + ']'))
+        .flatMap((element) => String(element.getAttribute(attributeName) || '').split(/s+/).filter(Boolean));
+      const clamp01 = (value) => Math.max(0, Math.min(1, value));
+      const applyEasing = (name, value) => {
+        const t = clamp01(value);
+        if (name === 'linear') return t;
+        if (name === 'ease-in') return t * t * t;
+        if (name === 'ease-out') return 1 - ((1 - t) * (1 - t) * (1 - t));
+        if (name === 'ease-in-out') {
+          return t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      };
+      const buildSampledMotionPath = (path) => {
+        const points = Array.isArray(path)
+          ? path.map((point) => ({ x: Number(point?.x) || 0, y: Number(point?.y) || 0 }))
+          : [];
+        if (points.length < 2) return null;
+        const segments = [];
+        let totalLength = 0;
+        for (let index = 1; index < points.length; index += 1) {
+          const from = points[index - 1];
+          const to = points[index];
+          const length = Math.hypot(to.x - from.x, to.y - from.y);
+          if (length <= 0.001) continue;
+          segments.push({ from, to, length, start: totalLength, end: totalLength + length });
+          totalLength += length;
+        }
+        if (!segments.length || totalLength <= 0.001) return null;
+        return { points, segments, totalLength };
+      };
+      const sampleMotionPath = (sampledPath, progress) => {
+        if (!sampledPath) return { x: 0, y: 0 };
+        const distance = sampledPath.totalLength * clamp01(progress);
+        const segment = sampledPath.segments.find((entry) => distance <= entry.end) || sampledPath.segments[sampledPath.segments.length - 1];
+        if (!segment) return { x: 0, y: 0 };
+        const segmentProgress = segment.length <= 0.001 ? 1 : (distance - segment.start) / segment.length;
+        return {
+          x: segment.from.x + (segment.to.x - segment.from.x) * segmentProgress,
+          y: segment.from.y + (segment.to.y - segment.from.y) * segmentProgress,
+        };
+      };
+      const applyMotionPathOverride = (node, point) => {
+        node.style.setProperty('--interaction-translate-x', '0px');
+        node.style.setProperty('--interaction-translate-y', '0px');
+        node.style.setProperty('transform', 'translate(' + String(point.x) + 'px, ' + String(point.y) + 'px)');
+      };
+      const clearMotionPathOverride = (node) => {
+        node.style.removeProperty('transform');
+        node.style.removeProperty('--interaction-translate-x');
+        node.style.removeProperty('--interaction-translate-y');
+      };
+      const ensureMotionPathAnimationLoop = () => {
+        if (motionPathFrameId) return;
+        const tick = (timestamp) => {
+          let hasRunningAnimation = false;
+          motionPathStates.forEach((state, targetId) => {
+            const node = stage.querySelector('.preview-node[data-item-id="' + targetId + '"]');
+            if (!node) {
+              motionPathStates.delete(targetId);
+              return;
+            }
+            const rule = motionPathRuleMap.get(state.ruleId || '');
+            if (!rule || !state.sampledPath) {
+              clearMotionPathOverride(node);
+              motionPathStates.delete(targetId);
+              return;
+            }
+            const delayMs = Math.max(0, Number(rule.delayMs) || 0);
+            const durationMs = Math.max(1, Number(rule.durationMs) || 1);
+            const elapsedMs = Math.max(0, timestamp - state.startedAt - delayMs);
+            const rawProgress = clamp01(elapsedMs / durationMs);
+            const easedProgress = applyEasing(rule.easing, rawProgress);
+            const currentProgress = state.fromProgress + (state.toProgress - state.fromProgress) * easedProgress;
+            const point = sampleMotionPath(state.sampledPath, currentProgress);
+            applyMotionPathOverride(node, point);
+            state.currentProgress = currentProgress;
+            if (rawProgress < 1) {
+              hasRunningAnimation = true;
+              return;
+            }
+            if (state.toProgress <= 0.001) {
+              clearMotionPathOverride(node);
+              motionPathStates.delete(targetId);
+            }
+          });
+          motionPathFrameId = hasRunningAnimation ? window.requestAnimationFrame(tick) : 0;
+        };
+        motionPathFrameId = window.requestAnimationFrame(tick);
+      };
+      const isMotionRuleActive = (rule, activeHoverRules, activeClickRules) => {
+        if (rule.trigger === 'hover') return activeHoverRules.has(rule.id);
+        if (rule.trigger === 'click') return activeClickRules.has(rule.id);
+        return stage.classList.contains('is-enter-ready');
+      };
+      const syncMotionPathStyles = () => {
+        const activeHoverRules = new Set(String(stage.getAttribute('data-active-hover-rules') || '').split(/s+/).filter(Boolean));
+        const activeClickRules = new Set(String(stage.getAttribute('data-active-click-rules') || '').split(/s+/).filter(Boolean));
+        motionPathRulesByTarget.forEach((rules, targetId) => {
+          const node = stage.querySelector('.preview-node[data-item-id="' + targetId + '"]');
+          if (!node) return;
+          const activeCandidates = rules.filter((rule) => isMotionRuleActive(rule, activeHoverRules, activeClickRules));
+          const activeRule = activeCandidates[activeCandidates.length - 1] || null;
+          const currentState = motionPathStates.get(targetId);
+          if (activeRule) {
+            const sampledPath = buildSampledMotionPath(activeRule.path);
+            if (!sampledPath) return;
+            if (currentState && currentState.ruleId === activeRule.id && currentState.toProgress === 1) return;
+            motionPathStates.set(targetId, {
+              ruleId: activeRule.id,
+              sampledPath,
+              fromProgress: currentState?.currentProgress || 0,
+              toProgress: 1,
+              currentProgress: currentState?.currentProgress || 0,
+              startedAt: performance.now(),
+            });
+            ensureMotionPathAnimationLoop();
+            return;
+          }
+          if (!currentState) {
+            clearMotionPathOverride(node);
+            return;
+          }
+          if (currentState.toProgress === 0) return;
+          motionPathStates.set(targetId, {
+            ...currentState,
+            fromProgress: currentState.currentProgress || 0,
+            toProgress: 0,
+            startedAt: performance.now(),
+          });
+          ensureMotionPathAnimationLoop();
+        });
+      };
+      const updateHoverRuleState = () => {
+        const active = new Set(String(stage.getAttribute('data-active-hover-rules') || '').split(/s+/).filter(Boolean));
+        const enterHovered = new Set(Array.from(stage.querySelectorAll('[data-hover-enter-rules]'))
+          .filter((element) => element.matches(':hover'))
+          .flatMap((element) => String(element.getAttribute('data-hover-enter-rules') || '').split(/s+/).filter(Boolean)));
+        const leaveHovered = new Set(Array.from(stage.querySelectorAll('[data-hover-leave-rules]'))
+          .filter((element) => element.matches(':hover'))
+          .flatMap((element) => String(element.getAttribute('data-hover-leave-rules') || '').split(/s+/).filter(Boolean)));
+        const knownRuleIds = new Set([...active, ...readRuleIds('data-hover-enter-rules'), ...readRuleIds('data-hover-leave-rules')]);
+        knownRuleIds.forEach((ruleId) => {
+          if (enterHovered.has(ruleId)) {
+            active.add(ruleId);
+            return;
+          }
+          if (!leaveHovered.has(ruleId)) {
+            active.delete(ruleId);
+          }
+        });
+        stage.setAttribute('data-active-hover-rules', Array.from(active).join(' '));
+        syncMotionPathStyles();
+      };
+      requestAnimationFrame(() => {
+        stage.classList.add('is-enter-ready');
+        updateHoverRuleState();
+        syncMotionPathStyles();
+      });
+      ['pointermove', 'pointerover', 'pointerout'].forEach((eventName) => {
+        stage.addEventListener(eventName, updateHoverRuleState);
+      });
+      stage.addEventListener('pointerleave', () => {
+        stage.setAttribute('data-active-hover-rules', '');
+        syncMotionPathStyles();
+      });
+      stage.addEventListener('click', (event) => {
+        const source = event.target instanceof Element ? event.target.closest('[data-click-rules]') : null;
+        if (!source) return;
+        const rules = String(source.getAttribute('data-click-rules') || '').split(/\s+/).filter(Boolean);
+        if (!rules.length) return;
+        const active = new Set(String(stage.getAttribute('data-active-click-rules') || '').split(/\s+/).filter(Boolean));
+        rules.forEach((ruleId) => {
+          if (active.has(ruleId)) active.delete(ruleId);
+          else active.add(ruleId);
+        });
+        stage.setAttribute('data-active-click-rules', Array.from(active).join(' '));
+        syncMotionPathStyles();
+      });
+    })();
+  </script>
+</body>
+</html>
