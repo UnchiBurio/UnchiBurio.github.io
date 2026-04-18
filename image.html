@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>project/image.html</title>
   <style>
-    body { margin: 0; background: #111; color: #f0f0f0; font-family: "Segoe UI", "Yu Gothic UI", sans-serif; }
-    .preview-stage { position: relative; min-height: 100vh; background: linear-gradient(160deg, #1e1e1e 0%, #151515 100%); overflow: visible; }
+    body { margin: 0; background: #1e1e1e; color: #f0f0f0; font-family: "Segoe UI", "Yu Gothic UI", sans-serif; }
+    .preview-stage { position: relative; min-height: 100vh; background: #1e1e1e; overflow: hidden; }
     .preview-node { position: absolute; left: 0; top: 0; --interaction-translate-x: 0px; --interaction-translate-y: 0px; --interaction-rotate: 0deg; --interaction-scale: 1; --interaction-opacity: 1; --interaction-color: var(--base-color); --interaction-duration: 250ms; --interaction-delay: 0ms; --interaction-easing: ease; }
     .preview-transform-layer { transform: translate(calc(-50% + var(--interaction-translate-x)), calc(-50% + var(--interaction-translate-y))) rotate(calc(var(--base-rotate, 0deg) + var(--interaction-rotate))) scale(calc(var(--base-scale, 1) * var(--interaction-scale))); transform-origin: center center; opacity: var(--interaction-opacity); transition: transform var(--interaction-duration) var(--interaction-easing) var(--interaction-delay), opacity var(--interaction-duration) var(--interaction-easing) var(--interaction-delay); }
     .preview-visual { color: var(--interaction-color, var(--base-color, inherit)); transition: color var(--interaction-duration) var(--interaction-easing) var(--interaction-delay); }
@@ -29,14 +29,15 @@
   </style>
 </head>
 <body>
-  <main class="preview-stage" aria-label="project/image.html" style="height:max(100vh, 684px);">
-    <div class="preview-node preview-node-image" data-item-id="3ca64abe-54ef-49d8-ba3f-d827faa81451" style="left:443px;top:314px;--base-rotate:0deg;--base-scale:1;--base-color:inherit;"><div class="preview-transform-layer preview-image-shell" style="width:700px;height:500px;"><img class="preview-visual preview-image" src="assets/images/eeeee.png" alt="" /></div></div>
+  <main class="preview-stage" aria-label="project/image.html" style="width:max(100vw, 752px);height:max(100vh, 522px);">
+    <div class="preview-node preview-node-image" data-item-id="735e417c-163d-456b-8314-e16f5ccd1a49" style="left:359px;top:220px;--base-rotate:0deg;--base-scale:1;--base-color:inherit;"><div class="preview-transform-layer preview-image-shell" style="width:546px;height:364px;"><img class="preview-visual preview-image" src="assets/images/chatgpt-image-nov-14-2025-05-47-13-am.png" alt="" /></div></div>
     
   </main>
   <script>
     (() => {
       const stage = document.querySelector('.preview-stage');
       if (!stage) return;
+      const maxConcurrentAudio = 0;
       const motionPathRules = [];
       const motionPathRuleMap = new Map(motionPathRules.map((rule) => [rule.id, rule]));
       const motionPathRulesByTarget = new Map();
@@ -94,6 +95,28 @@
           y: segment.from.y + (segment.to.y - segment.from.y) * segmentProgress,
         };
       };
+      const isAudioPlaying = (audio) => audio instanceof HTMLAudioElement && !audio.paused && !audio.ended;
+      const syncConcurrentAudioLimit = () => {
+        if (maxConcurrentAudio <= 0) return;
+        const playingAudios = Array.from(stage.querySelectorAll('.preview-audio'))
+          .filter(isAudioPlaying)
+          .sort((left, right) => (Number(left.dataset.playOrder) || 0) - (Number(right.dataset.playOrder) || 0));
+        while (playingAudios.length > maxConcurrentAudio) {
+          const audio = playingAudios.shift();
+          if (audio instanceof HTMLAudioElement) audio.pause();
+        }
+      };
+      if (maxConcurrentAudio > 0) {
+        let playOrder = 0;
+        Array.from(stage.querySelectorAll('.preview-audio')).forEach((audio) => {
+          if (!(audio instanceof HTMLAudioElement)) return;
+          audio.addEventListener('play', () => {
+            playOrder += 1;
+            audio.dataset.playOrder = String(playOrder);
+            syncConcurrentAudioLimit();
+          });
+        });
+      }
       const applyMotionPathOverride = (node, point) => {
         node.style.setProperty('--interaction-translate-x', '0px');
         node.style.setProperty('--interaction-translate-y', '0px');
